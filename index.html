@@ -23,7 +23,7 @@
         .custom-scrollbar::-webkit-scrollbar-thumb { background: rgba(51, 65, 85, 0.8); border-radius: 4px; }
     </style>
 </head>
-<body class="bg-slate-950 text-slate-100 min-h-screen flex flex-col justify-between selection:bg-emerald-500 selection:text-white">
+<body class="bg-slate-950 text-slate-100 min-h-screen flex flex-col justify-between selection:bg-emerald-500 selection:text-white pb-20">
     <div>
         <header class="sticky top-0 z-30 border-b border-slate-800 bg-slate-950/80 backdrop-filter backdrop-blur-md px-4 py-3 sm:px-8">
             <div class="max-w-7xl mx-auto flex flex-wrap justify-between items-center gap-4">
@@ -96,6 +96,27 @@
                 <div id="exerciseList" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5"></div>
             </section>
         </main>
+    </div>
+
+    <!-- Banner Flotante de Instalación -->
+    <div id="pwaInstallBanner" class="fixed bottom-4 left-4 right-4 max-w-md mx-auto bg-slate-900/95 border border-emerald-500/40 p-4 rounded-2xl shadow-2xl z-50 hidden flex items-center justify-between gap-3 backdrop-blur-md">
+        <div class="flex items-center gap-3">
+            <div class="p-2.5 bg-emerald-500/20 text-emerald-400 rounded-xl">
+                <i class="fa-solid fa-download text-lg"></i>
+            </div>
+            <div>
+                <h4 class="text-xs font-bold text-white">Instalar FitNotes PRO</h4>
+                <p id="pwaInstallDesc" class="text-[11px] text-slate-400">Descarga la app en tu teléfono</p>
+            </div>
+        </div>
+        <div class="flex items-center gap-2">
+            <button id="pwaInstallBtn" onclick="triggerPwaInstall()" class="bg-emerald-500 hover:bg-emerald-400 text-slate-950 text-xs font-bold px-3 py-2 rounded-xl transition-all whitespace-nowrap">
+                Descargar
+            </button>
+            <button onclick="closeInstallBanner()" class="text-slate-500 hover:text-slate-300 p-1">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+        </div>
     </div>
 
     <!-- Modales y Paneles -->
@@ -199,6 +220,7 @@
         let exercises = JSON.parse(localStorage.getItem('fitnotes_exercises')) || [];
         let timerInterval = null, timerTimeLeft = 60, isTimerRunning = false;
         let stopwatchInterval = null, stopwatchTime = 0, isStopwatchRunning = false;
+        let deferredPrompt = null;
 
         document.addEventListener('DOMContentLoaded', () => {
             if (exercises.length === 0) {
@@ -217,7 +239,51 @@
             }
             renderExercises();
             updateTimerDisplay();
+            checkPwaInstallation();
         });
+
+        // Lógica de Detección e Instalación de PWA
+        window.addEventListener('beforeinstallprompt', (e) => {
+            e.preventDefault();
+            deferredPrompt = e;
+            const banner = document.getElementById('pwaInstallBanner');
+            if (banner) banner.classList.remove('hidden');
+        });
+
+        function checkPwaInstallation() {
+            const isStandalone = window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone;
+            const isIos = /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
+
+            if (isStandalone) return;
+
+            if (isIos) {
+                const banner = document.getElementById('pwaInstallBanner');
+                const desc = document.getElementById('pwaInstallDesc');
+                const btn = document.getElementById('pwaInstallBtn');
+                if (banner && desc && btn) {
+                    desc.innerText = 'Toca Compartir ⎋ y "Agregar al inicio"';
+                    btn.innerText = '¿Cómo instalar?';
+                    btn.onclick = () => alert('Para instalar en iPhone:\n1. Toca el botón de Compartir en Safari (icono de cuadrado con flecha).\n2. Desliza hacia abajo y selecciona "Agregar a la pantalla de inicio".');
+                    banner.classList.remove('hidden');
+                }
+            }
+        }
+
+        function triggerPwaInstall() {
+            if (deferredPrompt) {
+                deferredPrompt.prompt();
+                deferredPrompt.userChoice.then((choiceResult) => {
+                    if (choiceResult.outcome === 'accepted') {
+                        closeInstallBanner();
+                    }
+                    deferredPrompt = null;
+                });
+            }
+        }
+
+        function closeInstallBanner() {
+            document.getElementById('pwaInstallBanner').classList.add('hidden');
+        }
 
         function saveToStorage() { localStorage.setItem('fitnotes_exercises', JSON.stringify(exercises)); }
 
