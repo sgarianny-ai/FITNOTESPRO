@@ -3,14 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>FitNotes PRO</title>
+    <title>PitchNotes PRO - Log para Pitchers</title>
     <!-- Configuración para PWA / App Móvil -->
     <link rel="manifest" href="manifest.json">
     <meta name="theme-color" content="#10b981">
     <meta name="mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    <meta name="apple-mobile-web-app-title" content="FitNotes">
+    <meta name="apple-mobile-web-app-title" content="PitchNotes">
     
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
@@ -29,26 +29,26 @@
     <div id="introScreen" class="fixed inset-0 z-50 bg-slate-950 flex flex-col justify-between p-6 sm:p-12 text-center transition-all duration-500">
         <div class="max-w-md mx-auto my-auto flex flex-col items-center space-y-6">
             <div class="p-5 bg-emerald-500/10 text-emerald-400 rounded-3xl border border-emerald-500/20 shadow-2xl shadow-emerald-500/10 animate-bounce">
-                <i class="fa-solid fa-dumbbell text-5xl"></i>
+                <i class="fa-solid fa-baseball text-5xl"></i>
             </div>
             
             <div>
                 <h1 class="text-3xl sm:text-4xl font-extrabold tracking-tight text-white mb-2">
-                    FitNotes <span class="text-emerald-400">PRO</span>
+                    PitchNotes <span class="text-emerald-400">PRO</span>
                 </h1>
                 <p id="motivationalQuote" class="text-slate-300 text-sm sm:text-base font-medium italic mt-4 leading-relaxed">
-                    "El dolor que sientes hoy es la fuerza que sentirás mañana."
+                    "El pitcheo es el arte de dominar el tiempo y el espacio en la zona de strike."
                 </p>
             </div>
 
             <button onclick="enterApp()" class="w-full bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-extrabold py-4 px-8 rounded-2xl shadow-lg shadow-emerald-500/25 transition-all transform active:scale-95 text-base uppercase tracking-wider flex items-center justify-center gap-3">
-                <span>Comenzar Entrenamiento</span>
+                <span>Ingresar al Bullpen</span>
                 <i class="fa-solid fa-arrow-right"></i>
             </button>
         </div>
 
         <div class="text-xs text-slate-500 tracking-widest uppercase">
-            Tu diario de entrenamiento personal
+            Diario de Control y Entrenamiento de Lanzadores
         </div>
     </div>
 
@@ -58,18 +58,18 @@
             <div class="max-w-7xl mx-auto flex justify-between items-center">
                 <div class="flex items-center space-x-3">
                     <div class="p-2.5 bg-emerald-500/10 text-emerald-400 rounded-xl border border-emerald-500/20">
-                        <i class="fa-solid fa-dumbbell text-xl"></i>
+                        <i class="fa-solid fa-baseball text-xl"></i>
                     </div>
                     <div>
                         <h1 class="font-bold text-lg sm:text-xl tracking-tight text-white flex items-center gap-2">
-                            FitNotes <span class="text-xs font-semibold px-2 py-0.5 rounded-md bg-emerald-500/20 text-emerald-400 border border-emerald-500/30">PRO</span>
+                            PitchNotes <span class="text-xs font-semibold px-2 py-0.5 rounded-md bg-emerald-500/20 text-emerald-400 border border-emerald-500/30">PITCHER</span>
                         </h1>
                     </div>
                 </div>
                 <div class="flex items-center gap-2">
                     <button onclick="openModal()" class="flex items-center gap-2 bg-emerald-500 hover:bg-emerald-600 text-slate-950 px-4 py-2 rounded-xl text-xs sm:text-sm font-semibold transition-all shadow-lg shadow-emerald-500/20 active:scale-95">
                         <i class="fa-solid fa-plus"></i>
-                        <span>Nuevo Ejercicio</span>
+                        <span>Registrar Sesión</span>
                     </button>
                 </div>
             </div>
@@ -80,27 +80,27 @@
                 <div class="md:col-span-2 glass-panel p-4 rounded-2xl flex flex-wrap sm:flex-nowrap gap-3 items-center">
                     <div class="relative flex-1 min-w-[200px]">
                         <i class="fa-solid fa-magnifying-glass absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-400 text-sm"></i>
-                        <input type="text" id="searchInput" oninput="renderExercises()" placeholder="Buscar ejercicio..." class="w-full bg-slate-900/90 border border-slate-700/80 rounded-xl pl-10 pr-4 py-2 text-sm text-slate-200 focus:outline-none focus:border-emerald-500 transition-all">
+                        <input type="text" id="searchInput" oninput="renderExercises()" placeholder="Buscar picheo o rutina..." class="w-full bg-slate-900/90 border border-slate-700/80 rounded-xl pl-10 pr-4 py-2 text-sm text-slate-200 focus:outline-none focus:border-emerald-500 transition-all">
                     </div>
                     <select id="categoryFilter" onchange="renderExercises()" class="bg-slate-900/90 border border-slate-700/80 rounded-xl px-3 py-2 text-sm text-slate-200 focus:outline-none focus:border-emerald-500">
                         <option value="all">Todas las Categorías</option>
-                        <option value="Superior">Tren Superior</option>
-                        <option value="Brazos">Brazos</option>
-                        <option value="Inferior">Tren Inferior</option>
-                        <option value="Core">Core / Abdomen</option>
-                        <option value="Cardio">Cardio / Movilidad</option>
+                        <option value="Bullpen">Sesión de Bullpen</option>
+                        <option value="Live BP">Live BP / Juego</option>
+                        <option value="Lanzamiento Largo">Long Toss (Tiros Largos)</option>
+                        <option value="Cuidado de Brazo">Cuidado de Brazo / Ligas</option>
+                        <option value="Mecánica">Drills de Mecánica</option>
                     </select>
                 </div>
 
                 <div class="glass-panel p-4 rounded-2xl flex items-center justify-between">
                     <div>
-                        <span class="text-[10px] font-bold tracking-wider text-slate-400 uppercase block">ACCESO RÁPIDO</span>
-                        <h3 class="text-sm font-semibold text-slate-200">Temporizador Rápido</h3>
+                        <span class="text-[10px] font-bold tracking-wider text-slate-400 uppercase block">DESCANSO ENTRE SETS</span>
+                        <h3 class="text-sm font-semibold text-slate-200">Temporizador de Recuperación</h3>
                     </div>
                     <div class="flex gap-1.5">
-                        <button onclick="startQuickTimer(30)" class="bg-slate-800 hover:bg-emerald-500/20 hover:text-emerald-400 hover:border-emerald-500/40 border border-slate-700 text-slate-300 text-xs px-2.5 py-1.5 rounded-lg transition-all font-mono">30s</button>
-                        <button onclick="startQuickTimer(60)" class="bg-slate-800 hover:bg-emerald-500/20 hover:text-emerald-400 hover:border-emerald-500/40 border border-slate-700 text-slate-300 text-xs px-2.5 py-1.5 rounded-lg transition-all font-mono">60s</button>
+                        <button onclick="startQuickTimer(45)" class="bg-slate-800 hover:bg-emerald-500/20 hover:text-emerald-400 hover:border-emerald-500/40 border border-slate-700 text-slate-300 text-xs px-2.5 py-1.5 rounded-lg transition-all font-mono">45s</button>
                         <button onclick="startQuickTimer(90)" class="bg-slate-800 hover:bg-emerald-500/20 hover:text-emerald-400 hover:border-emerald-500/40 border border-slate-700 text-slate-300 text-xs px-2.5 py-1.5 rounded-lg transition-all font-mono">90s</button>
+                        <button onclick="startQuickTimer(120)" class="bg-slate-800 hover:bg-emerald-500/20 hover:text-emerald-400 hover:border-emerald-500/40 border border-slate-700 text-slate-300 text-xs px-2.5 py-1.5 rounded-lg transition-all font-mono">2m</button>
                     </div>
                 </div>
             </section>
@@ -109,9 +109,9 @@
                 <div class="flex justify-between items-center mb-4">
                     <h2 class="text-base font-semibold text-slate-200 flex items-center gap-2">
                         <i class="fa-solid fa-list-check text-emerald-400"></i>
-                        <span>Mis Ejercicios & Rutinas</span>
+                        <span>Rutinas & Registros de Pitcheo</span>
                     </h2>
-                    <span id="exerciseCounter" class="text-xs font-medium text-slate-400 bg-slate-900 border border-slate-800 px-2.5 py-1 rounded-full">0 ejercicios</span>
+                    <span id="exerciseCounter" class="text-xs font-medium text-slate-400 bg-slate-900 border border-slate-800 px-2.5 py-1 rounded-full">0 registros</span>
                 </div>
                 <div id="exerciseList" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5"></div>
             </section>
@@ -125,8 +125,8 @@
                 <i class="fa-solid fa-download text-lg"></i>
             </div>
             <div>
-                <h4 class="text-xs font-bold text-white">Instalar FitNotes PRO</h4>
-                <p id="pwaInstallDesc" class="text-[11px] text-slate-400">Descarga la app en tu teléfono</p>
+                <h4 class="text-xs font-bold text-white">Instalar PitchNotes PRO</h4>
+                <p id="pwaInstallDesc" class="text-[11px] text-slate-400">Instala la app en tu teléfono</p>
             </div>
         </div>
         <div class="flex items-center gap-2">
@@ -139,45 +139,45 @@
         </div>
     </div>
 
-    <!-- Modal Formulario Ejercicio -->
+    <!-- Modal Formulario Picheo / Entrenamiento -->
     <div id="exerciseModal" class="fixed inset-0 bg-slate-950/80 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
         <div class="glass-panel w-full max-w-lg rounded-2xl p-6 shadow-2xl relative border border-slate-700/60 max-h-[90vh] overflow-y-auto custom-scrollbar">
             <button onclick="closeModal()" class="absolute top-4 right-4 text-slate-400 hover:text-white p-2"><i class="fa-solid fa-xmark text-lg"></i></button>
-            <h3 id="modalTitle" class="text-lg font-bold text-white mb-4">Agregar Nuevo Ejercicio</h3>
+            <h3 id="modalTitle" class="text-lg font-bold text-white mb-4">Registrar Nuevo Trabajo de Pitcheo</h3>
             <form id="exerciseForm" onsubmit="saveExercise(event)" class="space-y-4">
                 <input type="hidden" id="exerciseId">
                 <div>
-                    <label class="block text-xs font-medium text-slate-300 mb-1">Nombre del Ejercicio *</label>
-                    <input type="text" id="title" required placeholder="Ej: Press de Banca, Sentadillas..." class="w-full bg-slate-900 border border-slate-700 rounded-xl px-3.5 py-2.5 text-sm text-slate-100 focus:outline-none focus:border-emerald-500">
+                    <label class="block text-xs font-medium text-slate-300 mb-1">Nombre / Tipo de Pitcheo o Drill *</label>
+                    <input type="text" id="title" required placeholder="Ej: Recta de 4 Costuras, Cambio, Cuidado J-Bands..." class="w-full bg-slate-900 border border-slate-700 rounded-xl px-3.5 py-2.5 text-sm text-slate-100 focus:outline-none focus:border-emerald-500">
                 </div>
                 <div class="grid grid-cols-2 gap-3">
                     <div>
                         <label class="block text-xs font-medium text-slate-300 mb-1">Categoría</label>
                         <select id="category" class="w-full bg-slate-900 border border-slate-700 rounded-xl px-3 py-2.5 text-sm text-slate-100 focus:outline-none focus:border-emerald-500">
-                            <option value="Superior">Tren Superior</option>
-                            <option value="Brazos">Brazos</option>
-                            <option value="Inferior">Tren Inferior</option>
-                            <option value="Core">Core / Abdomen</option>
-                            <option value="Cardio">Cardio / Movilidad</option>
+                            <option value="Bullpen">Sesión de Bullpen</option>
+                            <option value="Live BP">Live BP / Juego</option>
+                            <option value="Lanzamiento Largo">Long Toss (Tiros Largos)</option>
+                            <option value="Cuidado de Brazo">Cuidado de Brazo / Ligas</option>
+                            <option value="Mecánica">Drills de Mecánica</option>
                         </select>
                     </div>
                     <div>
-                        <label class="block text-xs font-medium text-slate-300 mb-1">Series</label>
-                        <input type="number" id="sets" min="1" max="10" value="4" class="w-full bg-slate-900 border border-slate-700 rounded-xl px-3.5 py-2.5 text-sm text-slate-100 focus:outline-none focus:border-emerald-500">
+                        <label class="block text-xs font-medium text-slate-300 mb-1">Rondas / Innings / Sets</label>
+                        <input type="number" id="sets" min="1" max="10" value="3" class="w-full bg-slate-900 border border-slate-700 rounded-xl px-3.5 py-2.5 text-sm text-slate-100 focus:outline-none focus:border-emerald-500">
                     </div>
                 </div>
                 <div class="grid grid-cols-2 gap-3">
                     <div>
-                        <label class="block text-xs font-medium text-slate-300 mb-1">Repeticiones / Tiempo</label>
-                        <input type="text" id="reps" placeholder="Ej: 10-12 reps o 45 seg" class="w-full bg-slate-900 border border-slate-700 rounded-xl px-3.5 py-2.5 text-sm text-slate-100 focus:outline-none focus:border-emerald-500">
+                        <label class="block text-xs font-medium text-slate-300 mb-1">Picheos por Ronda / Reps</label>
+                        <input type="text" id="reps" placeholder="Ej: 15 lanzamientos o 12 reps" class="w-full bg-slate-900 border border-slate-700 rounded-xl px-3.5 py-2.5 text-sm text-slate-100 focus:outline-none focus:border-emerald-500">
                     </div>
                     <div>
-                        <label class="block text-xs font-medium text-slate-300 mb-1">Peso / Carga Objetivo</label>
-                        <input type="text" id="weight" placeholder="Ej: 50 kg o Corporal" class="w-full bg-slate-900 border border-slate-700 rounded-xl px-3.5 py-2.5 text-sm text-slate-100 focus:outline-none focus:border-emerald-500">
+                        <label class="block text-xs font-medium text-slate-300 mb-1">Velocidad / Distancia / Carga</label>
+                        <input type="text" id="weight" placeholder="Ej: 88-90 MPH, 120 pies, Ligas Rojas" class="w-full bg-slate-900 border border-slate-700 rounded-xl px-3.5 py-2.5 text-sm text-slate-100 focus:outline-none focus:border-emerald-500">
                     </div>
                 </div>
                 <div>
-                    <label class="block text-xs font-medium text-slate-300 mb-1">Imagen del Ejercicio</label>
+                    <label class="block text-xs font-medium text-slate-300 mb-1">Foto o Referencia Visual</label>
                     <div class="space-y-2">
                         <input type="file" id="imageFileInput" accept="image/*" onchange="handleImageUpload(event)" class="w-full text-xs text-slate-400 file:mr-3 file:py-2 file:px-3 file:rounded-xl file:border-0 file:text-xs file:font-semibold file:bg-slate-800 file:text-slate-200 hover:file:bg-slate-700">
                         <div class="text-center text-[10px] text-slate-500 font-semibold uppercase">O URL de Imagen Externa</div>
@@ -189,12 +189,12 @@
                     </div>
                 </div>
                 <div>
-                    <label class="block text-xs font-medium text-slate-300 mb-1">Notas / Técnica / Indicaciones</label>
-                    <textarea id="notes" rows="2" placeholder="Mantener la espalda recta, codos a 45 grados..." class="w-full bg-slate-900 border border-slate-700 rounded-xl px-3.5 py-2 text-xs text-slate-100 focus:outline-none focus:border-emerald-500"></textarea>
+                    <label class="block text-xs font-medium text-slate-300 mb-1">Notas de Mecánica / Localización / Sensaciones</label>
+                    <textarea id="notes" rows="2" placeholder="Buen agarre, soltando el punto arriba, localización bajando la zona..." class="w-full bg-slate-900 border border-slate-700 rounded-xl px-3.5 py-2 text-xs text-slate-100 focus:outline-none focus:border-emerald-500"></textarea>
                 </div>
                 <div class="flex justify-end gap-2 pt-2">
                     <button type="button" onclick="closeModal()" class="px-4 py-2 bg-slate-800 hover:bg-slate-700 text-slate-300 rounded-xl text-xs font-medium">Cancelar</button>
-                    <button type="submit" class="px-5 py-2 bg-emerald-500 hover:bg-emerald-600 text-slate-950 font-semibold rounded-xl text-xs transition-all">Guardar</button>
+                    <button type="submit" class="px-5 py-2 bg-emerald-500 hover:bg-emerald-600 text-slate-950 font-semibold rounded-xl text-xs transition-all">Guardar Registro</button>
                 </div>
             </form>
         </div>
@@ -205,7 +205,7 @@
         <div class="glass-panel w-full max-w-sm rounded-2xl p-6 shadow-2xl relative border border-slate-700/60 text-center">
             <button onclick="toggleTimerModal()" class="absolute top-4 right-4 text-slate-400 hover:text-white p-2"><i class="fa-solid fa-xmark text-lg"></i></button>
             <h3 class="text-base font-bold text-white mb-4 flex items-center justify-center gap-2">
-                <i class="fa-solid fa-stopwatch text-emerald-400"></i> Control de Tiempo
+                <i class="fa-solid fa-stopwatch text-emerald-400"></i> Reloj de Pitcheo / Descanso
             </h3>
             <div class="flex justify-center gap-2 mb-4 bg-slate-900/80 p-1 rounded-xl border border-slate-800">
                 <button onclick="switchTimerTab('timer')" id="tabTimerBtn" class="flex-1 py-1.5 text-xs font-semibold rounded-lg bg-emerald-500 text-slate-950">Temporizador</button>
@@ -215,10 +215,10 @@
             <div id="timerSection" class="space-y-4">
                 <div class="text-4xl font-mono font-extrabold tracking-wider text-emerald-400 my-2" id="timerDisplay">01:00</div>
                 <div class="flex justify-center gap-2">
-                    <button onclick="setTimerSeconds(30)" class="px-2.5 py-1 bg-slate-800 border border-slate-700 text-xs rounded-lg text-slate-300 hover:border-emerald-500">30s</button>
-                    <button onclick="setTimerSeconds(60)" class="px-2.5 py-1 bg-slate-800 border border-slate-700 text-xs rounded-lg text-slate-300 hover:border-emerald-500">60s</button>
+                    <button onclick="setTimerSeconds(20)" class="px-2.5 py-1 bg-slate-800 border border-slate-700 text-xs rounded-lg text-slate-300 hover:border-emerald-500">20s Pitch Clock</button>
+                    <button onclick="setTimerSeconds(45)" class="px-2.5 py-1 bg-slate-800 border border-slate-700 text-xs rounded-lg text-slate-300 hover:border-emerald-500">45s</button>
                     <button onclick="setTimerSeconds(90)" class="px-2.5 py-1 bg-slate-800 border border-slate-700 text-xs rounded-lg text-slate-300 hover:border-emerald-500">90s</button>
-                    <button onclick="setTimerSeconds(120)" class="px-2.5 py-1 bg-slate-800 border border-slate-700 text-xs rounded-lg text-slate-300 hover:border-emerald-500">2m</button>
+                    <button onclick="setTimerSeconds(180)" class="px-2.5 py-1 bg-slate-800 border border-slate-700 text-xs rounded-lg text-slate-300 hover:border-emerald-500">3m</button>
                 </div>
                 <div class="flex justify-center gap-3 pt-2">
                     <button id="startTimerBtn" onclick="toggleTimer()" class="bg-emerald-500 text-slate-950 font-bold px-5 py-2 rounded-xl text-xs hover:bg-emerald-400">Iniciar</button>
@@ -238,15 +238,21 @@
 
     <script>
         const quotes = [
-            '"El dolor que sientes hoy es la fuerza que sentirás mañana."',
-            '"No te detengas cuando estés cansado, detente cuando hayas terminado."',
-            '"La disciplina es hacer lo que debes hacer, incluso cuando no quieres."',
-            '"Cada repetición te acerca un paso más a tu mejor versión."',
-            '"Tu único límite eres tú mismo."'
+            '"El pitcheo es el arte de dominar el tiempo y el espacio en la zona de strike."',
+            '"Cada lanzamiento tiene un propósito; la localización vence a la velocidad."',
+            '"El control del cuerpo produce el control de la pelota."',
+            '"La consistencia en tu mecánica es tu mayor arma en la loma."',
+            '"Cuida tu brazo hoy para que sigas dominando mañana."'
         ];
 
-        const savedData = localStorage.getItem('fitnotes_exercises');
-        let exercises = savedData ? JSON.parse(savedData) : [];
+        const defaultBaseballData = [
+            { id: '1', title: 'Recta de 4 Costuras (Bullpen)', category: 'Bullpen', sets: 4, reps: '15 lanzamientos', weight: '88-91 MPH', notes: 'Enfoque en soltar la bola arriba y buscar la esquina de afuera.', completedSets: [false, false, false, false] },
+            { id: '2', title: 'Rutina de Ligas (J-Bands)', category: 'Cuidado de Brazo', sets: 3, reps: '15 reps por ejercicio', weight: 'Ligas Medias', notes: 'Cuidado de manguito rotador antes de lanzar.', completedSets: [false, false, false] },
+            { id: '3', title: 'Long Toss (Tiros Largos)', category: 'Lanzamiento Largo', sets: 3, reps: '20 lanzamientos', weight: '150-180 pies', notes: 'Mantener trayectoria plana en el regreso.', completedSets: [false, false, false] }
+        ];
+
+        const savedData = localStorage.getItem('pitchnotes_exercises');
+        let exercises = savedData ? JSON.parse(savedData) : defaultBaseballData;
         let timerInterval = null, timerTimeLeft = 60, isTimerRunning = false;
         let stopwatchInterval = null, stopwatchTime = 0, isStopwatchRunning = false;
         let deferredPrompt = null;
@@ -313,7 +319,7 @@
             document.getElementById('pwaInstallBanner').classList.add('hidden');
         }
 
-        function saveToStorage() { localStorage.setItem('fitnotes_exercises', JSON.stringify(exercises)); }
+        function saveToStorage() { localStorage.setItem('pitchnotes_exercises', JSON.stringify(exercises)); }
 
         function renderExercises() {
             const container = document.getElementById('exerciseList');
@@ -326,10 +332,10 @@
                 return matchesSearch && matchesCategory;
             });
 
-            document.getElementById('exerciseCounter').innerText = `${filtered.length} ejercicio${filtered.length !== 1 ? 's' : ''}`;
+            document.getElementById('exerciseCounter').innerText = `${filtered.length} registro${filtered.length !== 1 ? 's' : ''}`;
 
             if (filtered.length === 0) {
-                container.innerHTML = `<div class="col-span-full text-center py-12 glass-panel rounded-2xl"><i class="fa-solid fa-folder-open text-3xl text-slate-600 mb-2"></i><p class="text-slate-400 text-sm">No se encontraron ejercicios</p></div>`;
+                container.innerHTML = `<div class="col-span-full text-center py-12 glass-panel rounded-2xl"><i class="fa-solid fa-baseball text-3xl text-slate-600 mb-2"></i><p class="text-slate-400 text-sm">No se encontraron registros de pitcheo</p></div>`;
                 return;
             }
 
@@ -341,10 +347,12 @@
                             <div class="flex justify-between items-center gap-2 mb-3">
                                 <div class="flex items-center gap-2">
                                     <span class="text-[10px] font-bold px-2 py-0.5 rounded-md bg-slate-800/90 text-slate-300 border border-slate-700/80 uppercase">${ex.category}</span>
-                                    <button onclick="toggleTimerModal()" title="Abrir Reloj / Cronómetro" class="bg-slate-900/90 hover:bg-emerald-500/20 text-slate-400 hover:text-emerald-400 border border-slate-800 hover:border-emerald-500/40 p-1.5 rounded-lg text-xs transition-colors">
+                                    <!-- Botón de Reloj COMPLETAMENTE INDEPENDIENTE en la izquierda -->
+                                    <button onclick="toggleTimerModal()" title="Abrir Reloj de Pitcheo" class="bg-slate-900/90 hover:bg-emerald-500/20 text-slate-400 hover:text-emerald-400 border border-slate-800 hover:border-emerald-500/40 p-1.5 rounded-lg text-xs transition-colors">
                                         <i class="fa-solid fa-stopwatch"></i>
                                     </button>
                                 </div>
+                                <!-- Botones de Editar y Eliminar JUNTOS a la derecha -->
                                 <div class="flex gap-1 bg-slate-900/80 p-1 rounded-lg border border-slate-800">
                                     <button onclick="editExercise('${ex.id}')" title="Editar" class="text-slate-400 hover:text-emerald-400 p-1 text-xs"><i class="fa-solid fa-pen"></i></button>
                                     <button onclick="deleteExercise('${ex.id}')" title="Eliminar" class="text-slate-400 hover:text-rose-400 p-1 text-xs"><i class="fa-solid fa-trash"></i></button>
@@ -352,15 +360,15 @@
                             </div>
                             <h3 class="font-bold text-slate-100 text-base mb-2">${ex.title}</h3>
                             <div class="grid grid-cols-2 gap-2 text-xs mb-3">
-                                <div class="bg-slate-900/80 p-2 rounded-xl border border-slate-800"><span class="text-[10px] text-slate-400 block font-semibold">Series x Reps</span><span class="font-bold text-slate-200">${ex.sets} × ${ex.reps || '-'}</span></div>
-                                <div class="bg-slate-900/80 p-2 rounded-xl border border-slate-800"><span class="text-[10px] text-slate-400 block font-semibold">Carga / Peso</span><span class="font-bold text-slate-200">${ex.weight || 'Sin peso'}</span></div>
+                                <div class="bg-slate-900/80 p-2 rounded-xl border border-slate-800"><span class="text-[10px] text-slate-400 block font-semibold">Rondas x Reps</span><span class="font-bold text-slate-200">${ex.sets} × ${ex.reps || '-'}</span></div>
+                                <div class="bg-slate-900/80 p-2 rounded-xl border border-slate-800"><span class="text-[10px] text-slate-400 block font-semibold">Vel / Carga / Dist.</span><span class="font-bold text-slate-200">${ex.weight || 'N/A'}</span></div>
                             </div>
                             ${ex.notes ? `<p class="text-xs text-slate-400 line-clamp-2 bg-slate-900/40 p-2 rounded-lg border border-slate-800/50 mb-3"><i class="fa-solid fa-quote-left text-[10px] text-emerald-500/50 mr-1"></i>${ex.notes}</p>` : ''}
                         </div>
                     </div>
                     <div class="p-4 pt-0">
                         <div class="flex items-center justify-between text-[11px] font-semibold text-slate-400 mb-1.5">
-                            <span>SERIES REALIZADAS</span>
+                            <span>RONDAS REALIZADAS</span>
                             <button onclick="resetSingleExerciseCheckboxes('${ex.id}')" class="text-slate-400 hover:text-emerald-400 text-[10px] flex items-center gap-1 transition-colors">
                                 <i class="fa-solid fa-rotate-left"></i> Reiniciar
                             </button>
@@ -368,7 +376,7 @@
                         <div class="grid grid-cols-${Math.min(ex.sets, 5)} gap-1.5">
                             ${Array.from({length: ex.sets}).map((_, i) => `
                                 <button onclick="toggleSet('${ex.id}',${i})" class="py-1.5 rounded-lg text-xs font-mono font-bold transition-all flex items-center justify-center gap-1 ${ex.completedSets && ex.completedSets[i] ? 'bg-emerald-500/20 text-emerald-400 border border-emerald-500/40' : 'bg-slate-900 text-slate-500 border border-slate-800 hover:border-slate-700'}">
-                                    <i class="fa-solid ${ex.completedSets && ex.completedSets[i] ? 'fa-circle-check' : 'fa-circle'} text-[10px]"></i> S${i+1}
+                                    <i class="fa-solid ${ex.completedSets && ex.completedSets[i] ? 'fa-circle-check' : 'fa-circle'} text-[10px]"></i> R${i+1}
                                 </button>
                             `).join('')}
                         </div>
@@ -400,7 +408,7 @@
             document.getElementById('exerciseId').value = '';
             document.getElementById('imageData').value = '';
             document.getElementById('imagePreviewContainer').classList.add('hidden');
-            document.getElementById('modalTitle').innerText = 'Agregar Nuevo Ejercicio';
+            document.getElementById('modalTitle').innerText = 'Registrar Trabajo de Pitcheo';
 
             if (editId) {
                 const ex = exercises.find(e => e.id === editId);
@@ -417,7 +425,7 @@
                         document.getElementById('imagePreview').src = ex.imageData;
                         document.getElementById('imagePreviewContainer').classList.remove('hidden');
                     }
-                    document.getElementById('modalTitle').innerText = 'Editar Ejercicio';
+                    document.getElementById('modalTitle').innerText = 'Editar Registro';
                 }
             }
             document.getElementById('exerciseModal').classList.remove('hidden');
@@ -458,7 +466,7 @@
         function editExercise(id) { openModal(id); }
 
         function deleteExercise(id) {
-            if (confirm('¿Seguro que deseas eliminar este ejercicio?')) {
+            if (confirm('¿Seguro que deseas eliminar este registro?')) {
                 exercises = exercises.filter(ex => ex.id !== id);
                 saveToStorage();
                 renderExercises();
@@ -533,7 +541,7 @@
                         isTimerRunning = false;
                         btn.innerText = 'Iniciar';
                         playAlarmSound();
-                        alert('¡Tiempo de descanso finalizado!');
+                        alert('¡Tiempo de descanso / preparación completado!');
                     }
                 }, 1000);
             }
