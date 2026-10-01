@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>FitNotes PRO - Diario de Ejercicios</title>
+    <title>FitNotes PRO</title>
     <!-- Configuración para PWA / App Móvil -->
     <link rel="manifest" href="manifest.json">
     <meta name="theme-color" content="#10b981">
@@ -55,7 +55,7 @@
     <!-- CONTENIDO PRINCIPAL DE LA APLICACIÓN -->
     <div id="mainApp" class="hidden flex-col justify-between min-h-screen pb-20">
         <header class="sticky top-0 z-30 border-b border-slate-800 bg-slate-950/80 backdrop-filter backdrop-blur-md px-4 py-3 sm:px-8">
-            <div class="max-w-7xl mx-auto flex flex-wrap justify-between items-center gap-4">
+            <div class="max-w-7xl mx-auto flex justify-between items-center">
                 <div class="flex items-center space-x-3">
                     <div class="p-2.5 bg-emerald-500/10 text-emerald-400 rounded-xl border border-emerald-500/20">
                         <i class="fa-solid fa-dumbbell text-xl"></i>
@@ -64,15 +64,9 @@
                         <h1 class="font-bold text-lg sm:text-xl tracking-tight text-white flex items-center gap-2">
                             FitNotes <span class="text-xs font-semibold px-2 py-0.5 rounded-md bg-emerald-500/20 text-emerald-400 border border-emerald-500/30">PRO</span>
                         </h1>
-                        <p class="text-xs text-slate-400">Diario de Ejercicios y Tiempos de Descanso</p>
                     </div>
                 </div>
-                <div class="flex items-center gap-2 sm:gap-4 w-full sm:w-auto justify-between sm:justify-end">
-                    <button id="toggleTimerPanelBtn" onclick="toggleTimerModal()" class="flex items-center gap-2 bg-slate-800 hover:bg-slate-700 text-slate-200 px-3.5 py-2 rounded-xl text-xs font-medium border border-slate-700 transition-all">
-                        <i class="fa-solid fa-stopwatch text-emerald-400"></i>
-                        <span>Reloj / Temporizador</span>
-                        <span id="activeTimerBadge" class="hidden ml-1 px-1.5 py-0.5 bg-emerald-500 text-slate-950 font-bold rounded-md text-[10px]">00:00</span>
-                    </button>
+                <div class="flex items-center gap-2">
                     <button onclick="openModal()" class="flex items-center gap-2 bg-emerald-500 hover:bg-emerald-600 text-slate-950 px-4 py-2 rounded-xl text-xs sm:text-sm font-semibold transition-all shadow-lg shadow-emerald-500/20 active:scale-95">
                         <i class="fa-solid fa-plus"></i>
                         <span>Nuevo Ejercicio</span>
@@ -96,15 +90,12 @@
                         <option value="Core">Core / Abdomen</option>
                         <option value="Cardio">Cardio / Movilidad</option>
                     </select>
-                    <button onclick="resetCheckboxes()" class="text-xs bg-slate-800 hover:bg-slate-700 text-slate-300 border border-slate-700 rounded-xl px-3 py-2 flex items-center gap-1.5 whitespace-nowrap">
-                        <i class="fa-solid fa-rotate-left"></i> Reiniciar Checkbox
-                    </button>
                 </div>
 
                 <div class="glass-panel p-4 rounded-2xl flex items-center justify-between">
                     <div>
                         <span class="text-[10px] font-bold tracking-wider text-slate-400 uppercase block">ACCESO RÁPIDO</span>
-                        <h3 class="text-sm font-semibold text-slate-200">Temporizador de Descanso</h3>
+                        <h3 class="text-sm font-semibold text-slate-200">Temporizador Rápido</h3>
                     </div>
                     <div class="flex gap-1.5">
                         <button onclick="startQuickTimer(30)" class="bg-slate-800 hover:bg-emerald-500/20 hover:text-emerald-400 hover:border-emerald-500/40 border border-slate-700 text-slate-300 text-xs px-2.5 py-1.5 rounded-lg transition-all font-mono">30s</button>
@@ -261,7 +252,6 @@
         let deferredPrompt = null;
 
         document.addEventListener('DOMContentLoaded', () => {
-            // Frase motivadora aleatoria
             const randomQuote = quotes[Math.floor(Math.random() * quotes.length)];
             document.getElementById('motivationalQuote').innerText = randomQuote;
 
@@ -281,7 +271,6 @@
             }, 500);
         }
 
-        // Lógica de Detección e Instalación de PWA
         window.addEventListener('beforeinstallprompt', (e) => {
             e.preventDefault();
             deferredPrompt = e;
@@ -352,8 +341,9 @@
                             <div class="flex justify-between items-start gap-2 mb-2">
                                 <span class="text-[10px] font-bold px-2 py-0.5 rounded-md bg-slate-800/90 text-slate-300 border border-slate-700/80 uppercase">${ex.category}</span>
                                 <div class="flex gap-1 bg-slate-900/80 p-1 rounded-lg border border-slate-800">
-                                    <button onclick="editExercise('${ex.id}')" class="text-slate-400 hover:text-emerald-400 p-1 text-xs"><i class="fa-solid fa-pen"></i></button>
-                                    <button onclick="deleteExercise('${ex.id}')" class="text-slate-400 hover:text-rose-400 p-1 text-xs"><i class="fa-solid fa-trash"></i></button>
+                                    <button onclick="toggleTimerModal()" title="Abrir Reloj / Cronómetro" class="text-slate-400 hover:text-emerald-400 p-1 text-xs"><i class="fa-solid fa-stopwatch"></i></button>
+                                    <button onclick="editExercise('${ex.id}')" title="Editar" class="text-slate-400 hover:text-emerald-400 p-1 text-xs"><i class="fa-solid fa-pen"></i></button>
+                                    <button onclick="deleteExercise('${ex.id}')" title="Eliminar" class="text-slate-400 hover:text-rose-400 p-1 text-xs"><i class="fa-solid fa-trash"></i></button>
                                 </div>
                             </div>
                             <h3 class="font-bold text-slate-100 text-base mb-2">${ex.title}</h3>
@@ -366,8 +356,10 @@
                     </div>
                     <div class="p-4 pt-0">
                         <div class="flex items-center justify-between text-[11px] font-semibold text-slate-400 mb-1.5">
-                            <span>MARCAR SERIES REALIZADAS</span>
-                            <button onclick="startQuickTimer(60)" class="text-emerald-400 hover:underline text-[10px]"><i class="fa-solid fa-stopwatch"></i> Descanso</button>
+                            <span>SERIES REALIZADAS</span>
+                            <button onclick="resetSingleExerciseCheckboxes('${ex.id}')" class="text-slate-400 hover:text-emerald-400 text-[10px] flex items-center gap-1 transition-colors">
+                                <i class="fa-solid fa-rotate-left"></i> Reiniciar
+                            </button>
                         </div>
                         <div class="grid grid-cols-${Math.min(ex.sets, 5)} gap-1.5">
                             ${Array.from({length: ex.sets}).map((_, i) => `
@@ -390,10 +382,13 @@
             renderExercises();
         }
 
-        function resetCheckboxes() {
-            exercises.forEach(ex => { ex.completedSets = new Array(ex.sets).fill(false); });
-            saveToStorage();
-            renderExercises();
+        function resetSingleExerciseCheckboxes(exerciseId) {
+            const ex = exercises.find(e => e.id === exerciseId);
+            if (ex) {
+                ex.completedSets = new Array(ex.sets).fill(false);
+                saveToStorage();
+                renderExercises();
+            }
         }
 
         function openModal(editId = null) {
@@ -508,7 +503,6 @@
             const m = String(Math.floor(timerTimeLeft / 60)).padStart(2, '0');
             const s = String(timerTimeLeft % 60).padStart(2, '0');
             document.getElementById('timerDisplay').innerText = `${m}:${s}`;
-            document.getElementById('activeTimerBadge').innerText = `${m}:${s}`;
         }
 
         function setTimerSeconds(sec) {
@@ -519,7 +513,6 @@
 
         function toggleTimer() {
             const btn = document.getElementById('startTimerBtn');
-            const badge = document.getElementById('activeTimerBadge');
             if (isTimerRunning) {
                 clearInterval(timerInterval);
                 isTimerRunning = false;
@@ -527,7 +520,6 @@
             } else {
                 isTimerRunning = true;
                 btn.innerText = 'Pausar';
-                badge.classList.remove('hidden');
                 timerInterval = setInterval(() => {
                     if (timerTimeLeft > 0) {
                         timerTimeLeft--;
@@ -547,7 +539,6 @@
             if (isTimerRunning) toggleTimer();
             timerTimeLeft = 60;
             updateTimerDisplay();
-            document.getElementById('activeTimerBadge').classList.add('hidden');
         }
 
         function startQuickTimer(sec) {
