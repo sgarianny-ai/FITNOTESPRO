@@ -1,605 +1,436 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>PitchNotes PRO - Log para Pitchers</title>
-    <!-- Configuración para PWA / App Móvil -->
-    <link rel="manifest" href="manifest.json">
-    <meta name="theme-color" content="#10b981">
-    <meta name="mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    <meta name="apple-mobile-web-app-title" content="PitchNotes">
-    
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
-    <style>
-        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
-        body { font-family: 'Inter', sans-serif; }
-        .glass-panel { background: rgba(30, 41, 59, 0.7); backdrop-filter: blur(12px); border: 1px solid rgba(255, 255, 255, 0.08); }
-        .custom-scrollbar::-webkit-scrollbar { width: 6px; }
-        .custom-scrollbar::-webkit-scrollbar-track { background: rgba(15, 23, 42, 0.6); }
-        .custom-scrollbar::-webkit-scrollbar-thumb { background: rgba(51, 65, 85, 0.8); border-radius: 4px; }
-    </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PitchNotes PRO - Registro para Pitchers</title>
+  <link rel="manifest" href="manifest.json">
+  <style>
+    :root {
+      --bg-color: #121212;
+      --card-bg: #1e1e1e;
+      --primary: #00d2ff;
+      --accent: #ff9f43;
+      --text: #ffffff;
+      --text-muted: #aaaaaa;
+      --border: #333333;
+    }
+
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background-color: var(--bg-color);
+      color: var(--text);
+      margin: 0;
+      padding: 0;
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+    }
+
+    header {
+      background-color: var(--card-bg);
+      padding: 15px 20px;
+      text-align: center;
+      border-bottom: 1px solid var(--border);
+    }
+
+    header h1 {
+      margin: 0;
+      font-size: 1.5rem;
+      color: var(--primary);
+    }
+
+    nav {
+      display: flex;
+      justify-content: space-around;
+      background-color: var(--card-bg);
+      border-bottom: 1px solid var(--border);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+
+    .nav-btn {
+      background: none;
+      border: none;
+      color: var(--text-muted);
+      padding: 12px 10px;
+      font-size: 0.95rem;
+      cursor: pointer;
+      font-weight: 600;
+      flex: 1;
+      text-align: center;
+      border-bottom: 3px solid transparent;
+      transition: all 0.3s ease;
+    }
+
+    .nav-btn.active {
+      color: var(--primary);
+      border-bottom-color: var(--primary);
+    }
+
+    main {
+      padding: 20px;
+      max-width: 600px;
+      margin: 0 auto;
+      width: 100%;
+      box-sizing: border-box;
+      flex: 1;
+    }
+
+    .tab-content {
+      display: none;
+    }
+
+    .tab-content.active {
+      display: block;
+    }
+
+    h2 {
+      margin-top: 0;
+      font-size: 1.3rem;
+      color: var(--primary);
+    }
+
+    .subtitle {
+      color: var(--text-muted);
+      font-size: 0.85rem;
+      margin-top: -8px;
+      margin-bottom: 15px;
+    }
+
+    .card {
+      background-color: var(--card-bg);
+      padding: 15px;
+      border-radius: 8px;
+      border: 1px solid var(--border);
+      margin-bottom: 15px;
+    }
+
+    .form-group {
+      margin-bottom: 12px;
+    }
+
+    label {
+      display: block;
+      font-size: 0.85rem;
+      margin-bottom: 5px;
+      color: var(--text-muted);
+    }
+
+    input, select, textarea {
+      width: 100%;
+      padding: 10px;
+      background-color: #2a2a2a;
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      color: var(--text);
+      box-sizing: border-box;
+    }
+
+    button.btn-primary {
+      width: 100%;
+      padding: 12px;
+      background-color: var(--primary);
+      color: #000;
+      font-weight: bold;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      font-size: 1rem;
+    }
+
+    .routine-accordion {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .routine-block {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 12px 16px;
+    }
+
+    .routine-block summary {
+      font-weight: bold;
+      font-size: 1rem;
+      cursor: pointer;
+      color: var(--primary);
+      outline: none;
+    }
+
+    .exercise-list {
+      list-style: none;
+      padding-left: 0;
+      margin-top: 12px;
+    }
+
+    .exercise-list li {
+      padding: 8px 0;
+      border-bottom: 1px solid #2a2a2a;
+      font-size: 0.9rem;
+      line-height: 1.4;
+    }
+
+    .exercise-list li:last-child {
+      border-bottom: none;
+    }
+
+    .exercise-list strong {
+      color: var(--accent);
+    }
+
+    .timer-display {
+      font-size: 3rem;
+      text-align: center;
+      font-family: monospace;
+      margin: 20px 0;
+      color: var(--accent);
+    }
+
+    .timer-controls {
+      display: flex;
+      gap: 10px;
+    }
+
+    .timer-controls button {
+      flex: 1;
+      padding: 10px;
+      border: none;
+      border-radius: 6px;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    .btn-start { background-color: #2ed573; color: white; }
+    .btn-stop { background-color: #ff4757; color: white; }
+    .btn-reset { background-color: #747d8c; color: white; }
+  </style>
 </head>
-<body class="bg-slate-950 text-slate-100 min-h-screen flex flex-col justify-between selection:bg-emerald-500 selection:text-white">
+<body>
 
-    <!-- PANTALLA DE INTRO / BIENVENIDA -->
-    <div id="introScreen" class="fixed inset-0 z-50 bg-slate-950 flex flex-col justify-between p-6 sm:p-12 text-center transition-all duration-500">
-        <div class="max-w-md mx-auto my-auto flex flex-col items-center space-y-6">
-            <div class="p-5 bg-emerald-500/10 text-emerald-400 rounded-3xl border border-emerald-500/20 shadow-2xl shadow-emerald-500/10 animate-bounce">
-                <i class="fa-solid fa-baseball text-5xl"></i>
-            </div>
-            
-            <div>
-                <h1 class="text-3xl sm:text-4xl font-extrabold tracking-tight text-white mb-2">
-                    PitchNotes <span class="text-emerald-400">PRO</span>
-                </h1>
-                <p id="motivationalQuote" class="text-slate-300 text-sm sm:text-base font-medium italic mt-4 leading-relaxed">
-                    "El pitcheo es el arte de dominar el tiempo y el espacio en la zona de strike."
-                </p>
-            </div>
+  <header>
+    <h1>PitchNotes PRO</h1>
+  </header>
 
-            <button onclick="enterApp()" class="w-full bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-extrabold py-4 px-8 rounded-2xl shadow-lg shadow-emerald-500/25 transition-all transform active:scale-95 text-base uppercase tracking-wider flex items-center justify-center gap-3">
-                <span>Ingresar al Bullpen</span>
-                <i class="fa-solid fa-arrow-right"></i>
-            </button>
+  <nav>
+    <button class="nav-btn active" onclick="showTab('tab-registro', event)">Registro</button>
+    <button class="nav-btn" onclick="showTab('tab-timer', event)">Temporizador</button>
+    <button class="nav-btn" onclick="showTab('tab-rutinas', event)">Rutinas</button>
+  </nav>
+
+  <main>
+    <!-- REGISTRO -->
+    <section id="tab-registro" class="tab-content active">
+      <h2>Nueva Sesión de Pitcheo</h2>
+      <p class="subtitle">Registra el rendimiento de tus lanzamientos</p>
+      
+      <div class="card">
+        <form id="form-pitch">
+          <div class="form-group">
+            <label for="fecha">Fecha</label>
+            <input type="date" id="fecha" required>
+          </div>
+          <div class="form-group">
+            <label for="tipo-pitcheo">Tipo de Pitcheo</label>
+            <select id="tipo-pitcheo">
+              <option value="Recta (4-Seam)">Recta (4-Seam)</option>
+              <option value="Recta (2-Seam / Sinker)">Recta (2-Seam / Sinker)</option>
+              <option value="Cambio de Velocidad">Cambio de Velocidad</option>
+              <option value="Curva">Curva</option>
+              <option value="Slider">Slider</option>
+              <option value="Cutter">Cutter</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="lanzamientos">Cantidad de Lanzamientos</label>
+            <input type="number" id="lanzamientos" placeholder="Ej: 25" min="1" required>
+          </div>
+          <div class="form-group">
+            <label for="velocidad">Velocidad Máxima (mph)</label>
+            <input type="number" id="velocidad" placeholder="Ej: 88">
+          </div>
+          <div class="form-group">
+            <label for="notas">Notas / Sensaciones</label>
+            <textarea id="notas" rows="3" placeholder="Ubicación, agarre, comando..."></textarea>
+          </div>
+          <button type="submit" class="btn-primary">Guardar Sesión</button>
+        </form>
+      </div>
+
+      <h2>Historial Reciente</h2>
+      <div id="historial-container"></div>
+    </section>
+
+    <!-- TEMPORIZADOR -->
+    <section id="tab-timer" class="tab-content">
+      <h2>Temporizador de Descanso</h2>
+      <p class="subtitle">Controla el tiempo entre entradas o bullpens</p>
+      
+      <div class="card">
+        <div class="timer-display" id="timer-display">02:00</div>
+        <div class="timer-controls">
+          <button class="btn-start" onclick="startTimer()">Iniciar</button>
+          <button class="btn-stop" onclick="stopTimer()">Pausar</button>
+          <button class="btn-reset" onclick="resetTimer()">Reset</button>
         </div>
+      </div>
+    </section>
 
-        <div class="text-xs text-slate-500 tracking-widest uppercase">
-            Diario de Control y Entrenamiento de Lanzadores
+    <!-- RUTINAS -->
+    <section id="tab-rutinas" class="tab-content">
+      <h2>Rutinas de Movilidad y Calentamiento</h2>
+      <p class="subtitle">Guía de preparación física y salud articular para lanzadores</p>
+
+      <div class="routine-accordion">
+        <details class="routine-block">
+          <summary>1. Circuito de Movilidad para Lanzadores</summary>
+          <ul class="exercise-list">
+            <li><strong>Knee Over Toe Rockers:</strong> 3-5 reps (0°, 45°, 90° por lado). Balanceo de rodilla sobre la punta del pie.</li>
+            <li><strong>Knee Over Toe Lunges:</strong> 3-5 reps (0°, 45°, 90° por lado). Estocadas dinámicas proyectando rodilla.</li>
+            <li><strong>Deep Lunge Reaches:</strong> 3-5 reps/lado. Zancada profunda, toca la punta del pie y extiende torso atrás.</li>
+            <li><strong>Splits con Extensión de Cadera:</strong> 3 series x 10 seg/lado. Apertura con inclinación de torso.</li>
+            <li><strong>Cat / Cow Profundo:</strong> 2 series x 10-12 reps. Movilidad de columna sincronizada con respiración.</li>
+            <li><strong>Rotational Cat / Cow:</strong> 2 series x 5-8 reps/sentido. Círculos guiados desde el centro de la espalda.</li>
+            <li><strong>T-Spine Circles:</strong> 2 series x 3-5 reps/lado. Giros circulares con codos buscando el cielo.</li>
+            <li><strong>Reaching Lat Stretch:</strong> 10 reps/lado. Cruzar mano por el suelo arrodillado para estirar dorsal.</li>
+            <li><strong>Pulsating Pigeon Stretch:</strong> 2 series x 8-10 reps/lado. Postura de paloma con rebotes suaves.</li>
+            <li><strong>Squat to Knee Touch to Stand:</strong> 2-3 series x 5-8 reps. Sentadilla profunda apoyando rodillas.</li>
+          </ul>
+        </details>
+
+        <details class="routine-block">
+          <summary>2. Movilidad de Hombro con Tubo PVC</summary>
+          <ul class="exercise-list">
+            <li><strong>Shoulder Dislocates:</strong> 10 reps. Pases de barra de frente a espalda con brazos extendidos.</li>
+            <li><strong>External Rotation:</strong> 30 seg sosteniendo por lado. Palanca suave con el tubo detrás del codo.</li>
+            <li><strong>Figure 8s:</strong> 8 reps/lado. Movimiento fluido en forma de 8 con el tubo.</li>
+            <li><strong>Internal Rotation:</strong> 30 seg/lado. Barra por la espalda traccionando hacia arriba.</li>
+            <li><strong>Overhead Triceps Stretch:</strong> 30 seg/lado. Tubo detrás de espalda flexionado por encima del hombro.</li>
+            <li><strong>Bent Over Lat Stretch:</strong> 30 seg/lado. Tubo vertical en el suelo e inclinación de torso.</li>
+            <li><strong>Rear Delt Cross Body Stretch:</strong> 30 seg/lado. Cruzar brazo al frente apoyando barra para deltoides posterior.</li>
+          </ul>
+        </details>
+
+        <details class="routine-block">
+          <summary>3. Salud Escapular (Lanzar más duro)</summary>
+          <ul class="exercise-list">
+            <li><strong>Prone Scapular Press:</strong> 2 series x 10-12 reps. Boca abajo, extensión y retracción escapular.</li>
+            <li><strong>Banded Shoulder Dislocates:</strong> 2 series x 10 reps. Boca abajo pasando banda elástica.</li>
+            <li><strong>Behind the Back Through:</strong> 2 series x 8-10 reps. Pasar objeto alrededor del cuerpo boca abajo.</li>
+            <li><strong>Quadruped Scapular Rockback:</strong> 2 series x 10 reps. Deslizar mano sobre Foam Roller en 4 puntos.</li>
+            <li><strong>Lateral Reach:</strong> 2 series x 8-10 reps/lado. Deslizamiento lateral con Foam Roller.</li>
+            <li><strong>Prone Shoulder Clock Drill:</strong> 2 series x 6-8 giros. Círculos con brazos despegados del suelo.</li>
+            <li><strong>Prone Hand Lift w/ Holds:</strong> 2 series x 8-10 reps (Sostener 2-3s). Elevar manos apretando escápulas.</li>
+          </ul>
+        </details>
+
+        <details class="routine-block">
+          <summary>4. Movilidad de Cadera (Hip Mobility)</summary>
+          <ul class="exercise-list">
+            <li><strong>Seated KB Leg Lifts:</strong> 2 series x 10-12 reps/lado. Elevar pierna sobre pesa rusa sentado.</li>
+            <li><strong>Seated 90/90 Rotations:</strong> 2 series x 8-10 reps/lado. Elevar piernas en posición 90/90.</li>
+            <li><strong>Lateral Cossack Squat w/ KB:</strong> 2 series x 8 reps/lado. Sentadilla lateral profunda con peso.</li>
+            <li><strong>Squat to Half-Kneeling Shifts:</strong> 2 series x 6-8 reps. Alternar de sentadilla a rodilla en piso.</li>
+            <li><strong>Half-Kneeling Hip Rotations:</strong> 2 series x 8-10 reps/lado. Rotar cadera despegando rodilla.</li>
+            <li><strong>90/90 Switch to High Kneel:</strong> 2 series x 6-8 reps. Transición de sentado a erguido sobre rodillas.</li>
+            <li><strong>Frog Stretch con Deslizamiento:</strong> 2 series x 10-12 reps. Rodillas abiertas en suelo moviendo cadera.</li>
+          </ul>
+        </details>
+      </div>
+    </section>
+  </main>
+
+  <script>
+    function showTab(tabId, ev) {
+      document.querySelectorAll('.tab-content').forEach(tab => tab.classList.remove('active'));
+      document.querySelectorAll('.nav-btn').forEach(btn => btn.classList.remove('active'));
+
+      document.getElementById(tabId).classList.add('active');
+      if (ev && ev.target) ev.target.classList.add('active');
+    }
+
+    const fechaInput = document.getElementById('fecha');
+    if (fechaInput) fechaInput.valueAsDate = new Date();
+
+    let timerInterval = null;
+    let timeInSeconds = 120;
+
+    function updateTimerDisplay() {
+      const mins = Math.floor(timeInSeconds / 60).toString().padStart(2, '0');
+      const secs = (timeInSeconds % 60).toString().padStart(2, '0');
+      document.getElementById('timer-display').textContent = `${mins}:${secs}`;
+    }
+
+    function startTimer() {
+      if (timerInterval) return;
+      timerInterval = setInterval(() => {
+        if (timeInSeconds > 0) {
+          timeInSeconds--;
+          updateTimerDisplay();
+        } else {
+          clearInterval(timerInterval);
+          timerInterval = null;
+          alert('¡Tiempo de descanso finalizado!');
+        }
+      }, 1000);
+    }
+
+    function stopTimer() {
+      clearInterval(timerInterval);
+      timerInterval = null;
+    }
+
+    function resetTimer() {
+      stopTimer();
+      timeInSeconds = 120;
+      updateTimerDisplay();
+    }
+
+    document.getElementById('form-pitch').addEventListener('submit', function(e) {
+      e.preventDefault();
+      
+      const sesion = {
+        fecha: document.getElementById('fecha').value,
+        tipo: document.getElementById('tipo-pitcheo').value,
+        lanzamientos: document.getElementById('lanzamientos').value,
+        velocidad: document.getElementById('velocidad').value || 'N/A',
+        notas: document.getElementById('notas').value
+      };
+
+      let historial = JSON.parse(localStorage.getItem('pitcheo_historial')) || [];
+      historial.unshift(sesion);
+      localStorage.setItem('pitcheo_historial', JSON.stringify(historial));
+
+      this.reset();
+      document.getElementById('fecha').valueAsDate = new Date();
+      renderHistorial();
+    });
+
+    function renderHistorial() {
+      const container = document.getElementById('historial-container');
+      let historial = JSON.parse(localStorage.getItem('pitcheo_historial')) || [];
+
+      if (historial.length === 0) {
+        container.innerHTML = '<p style="color: var(--text-muted); font-size: 0.9rem;">No hay sesiones registradas aún.</p>';
+        return;
+      }
+
+      container.innerHTML = historial.map(item => `
+        <div class="card">
+          <div style="display:flex; justify-content:space-between; margin-bottom:5px;">
+            <strong style="color:var(--primary);">${item.tipo}</strong>
+            <small style="color:var(--text-muted);">${item.fecha}</small>
+          </div>
+          <p style="margin: 5px 0; font-size: 0.9rem;">Lanzamientos: <strong>${item.lanzamientos}</strong> | Max: <strong>${item.velocidad} mph</strong></p>
+          ${item.notas ? `<p style="margin: 5px 0 0 0; font-size: 0.85rem; color: var(--text-muted);"><em>"${item.notas}"</em></p>` : ''}
         </div>
-    </div>
+      `).join('');
+    }
 
-    <!-- CONTENIDO PRINCIPAL DE LA APLICACIÓN -->
-    <div id="mainApp" class="hidden flex-col justify-between min-h-screen pb-20">
-        <header class="sticky top-0 z-30 border-b border-slate-800 bg-slate-950/80 backdrop-filter backdrop-blur-md px-4 py-3 sm:px-8">
-            <div class="max-w-7xl mx-auto flex justify-between items-center">
-                <div class="flex items-center space-x-3">
-                    <div class="p-2.5 bg-emerald-500/10 text-emerald-400 rounded-xl border border-emerald-500/20">
-                        <i class="fa-solid fa-baseball text-xl"></i>
-                    </div>
-                    <div>
-                        <h1 class="font-bold text-lg sm:text-xl tracking-tight text-white flex items-center gap-2">
-                            PitchNotes <span class="text-xs font-semibold px-2 py-0.5 rounded-md bg-emerald-500/20 text-emerald-400 border border-emerald-500/30">PITCHER</span>
-                        </h1>
-                    </div>
-                </div>
-                <div class="flex items-center gap-2">
-                    <button onclick="openModal()" class="flex items-center gap-2 bg-emerald-500 hover:bg-emerald-600 text-slate-950 px-4 py-2 rounded-xl text-xs sm:text-sm font-semibold transition-all shadow-lg shadow-emerald-500/20 active:scale-95">
-                        <i class="fa-solid fa-plus"></i>
-                        <span>Registrar Sesión</span>
-                    </button>
-                </div>
-            </div>
-        </header>
-
-        <main class="max-w-7xl mx-auto px-4 py-6 sm:px-8 space-y-6 flex-1 w-full">
-            <section class="grid grid-cols-1 md:grid-cols-3 gap-4">
-                <div class="md:col-span-2 glass-panel p-4 rounded-2xl flex flex-wrap sm:flex-nowrap gap-3 items-center">
-                    <div class="relative flex-1 min-w-[200px]">
-                        <i class="fa-solid fa-magnifying-glass absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-400 text-sm"></i>
-                        <input type="text" id="searchInput" oninput="renderExercises()" placeholder="Buscar picheo o rutina..." class="w-full bg-slate-900/90 border border-slate-700/80 rounded-xl pl-10 pr-4 py-2 text-sm text-slate-200 focus:outline-none focus:border-emerald-500 transition-all">
-                    </div>
-                    <select id="categoryFilter" onchange="renderExercises()" class="bg-slate-900/90 border border-slate-700/80 rounded-xl px-3 py-2 text-sm text-slate-200 focus:outline-none focus:border-emerald-500">
-                        <option value="all">Todas las Categorías</option>
-                        <option value="Bullpen">Sesión de Bullpen</option>
-                        <option value="Live BP">Live BP / Juego</option>
-                        <option value="Lanzamiento Largo">Long Toss (Tiros Largos)</option>
-                        <option value="Cuidado de Brazo">Cuidado de Brazo / Ligas</option>
-                        <option value="Mecánica">Drills de Mecánica</option>
-                    </select>
-                </div>
-
-                <div class="glass-panel p-4 rounded-2xl flex items-center justify-between">
-                    <div>
-                        <span class="text-[10px] font-bold tracking-wider text-slate-400 uppercase block">DESCANSO ENTRE SETS</span>
-                        <h3 class="text-sm font-semibold text-slate-200">Temporizador de Recuperación</h3>
-                    </div>
-                    <div class="flex gap-1.5">
-                        <button onclick="startQuickTimer(45)" class="bg-slate-800 hover:bg-emerald-500/20 hover:text-emerald-400 hover:border-emerald-500/40 border border-slate-700 text-slate-300 text-xs px-2.5 py-1.5 rounded-lg transition-all font-mono">45s</button>
-                        <button onclick="startQuickTimer(90)" class="bg-slate-800 hover:bg-emerald-500/20 hover:text-emerald-400 hover:border-emerald-500/40 border border-slate-700 text-slate-300 text-xs px-2.5 py-1.5 rounded-lg transition-all font-mono">90s</button>
-                        <button onclick="startQuickTimer(120)" class="bg-slate-800 hover:bg-emerald-500/20 hover:text-emerald-400 hover:border-emerald-500/40 border border-slate-700 text-slate-300 text-xs px-2.5 py-1.5 rounded-lg transition-all font-mono">2m</button>
-                    </div>
-                </div>
-            </section>
-
-            <section>
-                <div class="flex justify-between items-center mb-4">
-                    <h2 class="text-base font-semibold text-slate-200 flex items-center gap-2">
-                        <i class="fa-solid fa-list-check text-emerald-400"></i>
-                        <span>Rutinas & Registros de Pitcheo</span>
-                    </h2>
-                    <span id="exerciseCounter" class="text-xs font-medium text-slate-400 bg-slate-900 border border-slate-800 px-2.5 py-1 rounded-full">0 registros</span>
-                </div>
-                <div id="exerciseList" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5"></div>
-            </section>
-        </main>
-    </div>
-
-    <!-- Banner Flotante de Instalación -->
-    <div id="pwaInstallBanner" class="fixed bottom-4 left-4 right-4 max-w-md mx-auto bg-slate-900/95 border border-emerald-500/40 p-4 rounded-2xl shadow-2xl z-50 hidden flex items-center justify-between gap-3 backdrop-blur-md">
-        <div class="flex items-center gap-3">
-            <div class="p-2.5 bg-emerald-500/20 text-emerald-400 rounded-xl">
-                <i class="fa-solid fa-download text-lg"></i>
-            </div>
-            <div>
-                <h4 class="text-xs font-bold text-white">Instalar PitchNotes PRO</h4>
-                <p id="pwaInstallDesc" class="text-[11px] text-slate-400">Instala la app en tu teléfono</p>
-            </div>
-        </div>
-        <div class="flex items-center gap-2">
-            <button id="pwaInstallBtn" onclick="triggerPwaInstall()" class="bg-emerald-500 hover:bg-emerald-400 text-slate-950 text-xs font-bold px-3 py-2 rounded-xl transition-all whitespace-nowrap">
-                Descargar
-            </button>
-            <button onclick="closeInstallBanner()" class="text-slate-500 hover:text-slate-300 p-1">
-                <i class="fa-solid fa-xmark"></i>
-            </button>
-        </div>
-    </div>
-
-    <!-- Modal Formulario Picheo / Entrenamiento -->
-    <div id="exerciseModal" class="fixed inset-0 bg-slate-950/80 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
-        <div class="glass-panel w-full max-w-lg rounded-2xl p-6 shadow-2xl relative border border-slate-700/60 max-h-[90vh] overflow-y-auto custom-scrollbar">
-            <button onclick="closeModal()" class="absolute top-4 right-4 text-slate-400 hover:text-white p-2"><i class="fa-solid fa-xmark text-lg"></i></button>
-            <h3 id="modalTitle" class="text-lg font-bold text-white mb-4">Registrar Nuevo Trabajo de Pitcheo</h3>
-            <form id="exerciseForm" onsubmit="saveExercise(event)" class="space-y-4">
-                <input type="hidden" id="exerciseId">
-                <div>
-                    <label class="block text-xs font-medium text-slate-300 mb-1">Nombre / Tipo de Pitcheo o Drill *</label>
-                    <input type="text" id="title" required placeholder="Ej: Recta de 4 Costuras, Cambio, Cuidado J-Bands..." class="w-full bg-slate-900 border border-slate-700 rounded-xl px-3.5 py-2.5 text-sm text-slate-100 focus:outline-none focus:border-emerald-500">
-                </div>
-                <div class="grid grid-cols-2 gap-3">
-                    <div>
-                        <label class="block text-xs font-medium text-slate-300 mb-1">Categoría</label>
-                        <select id="category" class="w-full bg-slate-900 border border-slate-700 rounded-xl px-3 py-2.5 text-sm text-slate-100 focus:outline-none focus:border-emerald-500">
-                            <option value="Bullpen">Sesión de Bullpen</option>
-                            <option value="Live BP">Live BP / Juego</option>
-                            <option value="Lanzamiento Largo">Long Toss (Tiros Largos)</option>
-                            <option value="Cuidado de Brazo">Cuidado de Brazo / Ligas</option>
-                            <option value="Mecánica">Drills de Mecánica</option>
-                        </select>
-                    </div>
-                    <div>
-                        <label class="block text-xs font-medium text-slate-300 mb-1">Rondas / Innings / Sets</label>
-                        <input type="number" id="sets" min="1" max="10" value="3" class="w-full bg-slate-900 border border-slate-700 rounded-xl px-3.5 py-2.5 text-sm text-slate-100 focus:outline-none focus:border-emerald-500">
-                    </div>
-                </div>
-                <div class="grid grid-cols-2 gap-3">
-                    <div>
-                        <label class="block text-xs font-medium text-slate-300 mb-1">Picheos por Ronda / Reps</label>
-                        <input type="text" id="reps" placeholder="Ej: 15 lanzamientos o 12 reps" class="w-full bg-slate-900 border border-slate-700 rounded-xl px-3.5 py-2.5 text-sm text-slate-100 focus:outline-none focus:border-emerald-500">
-                    </div>
-                    <div>
-                        <label class="block text-xs font-medium text-slate-300 mb-1">Velocidad / Distancia / Carga</label>
-                        <input type="text" id="weight" placeholder="Ej: 88-90 MPH, 120 pies, Ligas Rojas" class="w-full bg-slate-900 border border-slate-700 rounded-xl px-3.5 py-2.5 text-sm text-slate-100 focus:outline-none focus:border-emerald-500">
-                    </div>
-                </div>
-                <div>
-                    <label class="block text-xs font-medium text-slate-300 mb-1">Foto o Referencia Visual</label>
-                    <div class="space-y-2">
-                        <input type="file" id="imageFileInput" accept="image/*" onchange="handleImageUpload(event)" class="w-full text-xs text-slate-400 file:mr-3 file:py-2 file:px-3 file:rounded-xl file:border-0 file:text-xs file:font-semibold file:bg-slate-800 file:text-slate-200 hover:file:bg-slate-700">
-                        <div class="text-center text-[10px] text-slate-500 font-semibold uppercase">O URL de Imagen Externa</div>
-                        <input type="url" id="imageUrlInput" placeholder="https://ejemplo.com/imagen.jpg" oninput="handleUrlInput()" class="w-full bg-slate-900 border border-slate-700 rounded-xl px-3.5 py-2 text-xs text-slate-100 focus:outline-none focus:border-emerald-500">
-                    </div>
-                    <input type="hidden" id="imageData">
-                    <div id="imagePreviewContainer" class="mt-2 hidden">
-                        <img id="imagePreview" src="" class="w-full h-32 object-cover rounded-xl border border-slate-700">
-                    </div>
-                </div>
-                <div>
-                    <label class="block text-xs font-medium text-slate-300 mb-1">Notas de Mecánica / Localización / Sensaciones</label>
-                    <textarea id="notes" rows="2" placeholder="Buen agarre, soltando el punto arriba, localización bajando la zona..." class="w-full bg-slate-900 border border-slate-700 rounded-xl px-3.5 py-2 text-xs text-slate-100 focus:outline-none focus:border-emerald-500"></textarea>
-                </div>
-                <div class="flex justify-end gap-2 pt-2">
-                    <button type="button" onclick="closeModal()" class="px-4 py-2 bg-slate-800 hover:bg-slate-700 text-slate-300 rounded-xl text-xs font-medium">Cancelar</button>
-                    <button type="submit" class="px-5 py-2 bg-emerald-500 hover:bg-emerald-600 text-slate-950 font-semibold rounded-xl text-xs transition-all">Guardar Registro</button>
-                </div>
-            </form>
-        </div>
-    </div>
-
-    <!-- Panel Modal de Reloj y Temporizador -->
-    <div id="timerModal" class="fixed inset-0 bg-slate-950/80 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
-        <div class="glass-panel w-full max-w-sm rounded-2xl p-6 shadow-2xl relative border border-slate-700/60 text-center">
-            <button onclick="toggleTimerModal()" class="absolute top-4 right-4 text-slate-400 hover:text-white p-2"><i class="fa-solid fa-xmark text-lg"></i></button>
-            <h3 class="text-base font-bold text-white mb-4 flex items-center justify-center gap-2">
-                <i class="fa-solid fa-stopwatch text-emerald-400"></i> Reloj de Pitcheo / Descanso
-            </h3>
-            <div class="flex justify-center gap-2 mb-4 bg-slate-900/80 p-1 rounded-xl border border-slate-800">
-                <button onclick="switchTimerTab('timer')" id="tabTimerBtn" class="flex-1 py-1.5 text-xs font-semibold rounded-lg bg-emerald-500 text-slate-950">Temporizador</button>
-                <button onclick="switchTimerTab('stopwatch')" id="tabStopwatchBtn" class="flex-1 py-1.5 text-xs font-semibold rounded-lg text-slate-400">Cronómetro</button>
-            </div>
-            
-            <div id="timerSection" class="space-y-4">
-                <div class="text-4xl font-mono font-extrabold tracking-wider text-emerald-400 my-2" id="timerDisplay">01:00</div>
-                <div class="flex justify-center gap-2">
-                    <button onclick="setTimerSeconds(20)" class="px-2.5 py-1 bg-slate-800 border border-slate-700 text-xs rounded-lg text-slate-300 hover:border-emerald-500">20s Pitch Clock</button>
-                    <button onclick="setTimerSeconds(45)" class="px-2.5 py-1 bg-slate-800 border border-slate-700 text-xs rounded-lg text-slate-300 hover:border-emerald-500">45s</button>
-                    <button onclick="setTimerSeconds(90)" class="px-2.5 py-1 bg-slate-800 border border-slate-700 text-xs rounded-lg text-slate-300 hover:border-emerald-500">90s</button>
-                    <button onclick="setTimerSeconds(180)" class="px-2.5 py-1 bg-slate-800 border border-slate-700 text-xs rounded-lg text-slate-300 hover:border-emerald-500">3m</button>
-                </div>
-                <div class="flex justify-center gap-3 pt-2">
-                    <button id="startTimerBtn" onclick="toggleTimer()" class="bg-emerald-500 text-slate-950 font-bold px-5 py-2 rounded-xl text-xs hover:bg-emerald-400">Iniciar</button>
-                    <button onclick="resetTimer()" class="bg-slate-800 text-slate-300 border border-slate-700 px-4 py-2 rounded-xl text-xs hover:bg-slate-700">Reiniciar</button>
-                </div>
-            </div>
-
-            <div id="stopwatchSection" class="space-y-4 hidden">
-                <div class="text-4xl font-mono font-extrabold tracking-wider text-emerald-400 my-2" id="stopwatchDisplay">00:00:00</div>
-                <div class="flex justify-center gap-3 pt-2">
-                    <button id="startStopwatchBtn" onclick="toggleStopwatch()" class="bg-emerald-500 text-slate-950 font-bold px-5 py-2 rounded-xl text-xs hover:bg-emerald-400">Iniciar</button>
-                    <button onclick="resetStopwatch()" class="bg-slate-800 text-slate-300 border border-slate-700 px-4 py-2 rounded-xl text-xs hover:bg-slate-700">Reiniciar</button>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <script>
-        const quotes = [
-            '"El pitcheo es el arte de dominar el tiempo y el espacio en la zona de strike."',
-            '"Cada lanzamiento tiene un propósito; la localización vence a la velocidad."',
-            '"El control del cuerpo produce el control de la pelota."',
-            '"La consistencia en tu mecánica es tu mayor arma en la loma."',
-            '"Cuida tu brazo hoy para que sigas dominando mañana."'
-        ];
-
-        const defaultBaseballData = [
-            { id: '1', title: 'Recta de 4 Costuras (Bullpen)', category: 'Bullpen', sets: 4, reps: '15 lanzamientos', weight: '88-91 MPH', notes: 'Enfoque en soltar la bola arriba y buscar la esquina de afuera.', completedSets: [false, false, false, false] },
-            { id: '2', title: 'Rutina de Ligas (J-Bands)', category: 'Cuidado de Brazo', sets: 3, reps: '15 reps por ejercicio', weight: 'Ligas Medias', notes: 'Cuidado de manguito rotador antes de lanzar.', completedSets: [false, false, false] },
-            { id: '3', title: 'Long Toss (Tiros Largos)', category: 'Lanzamiento Largo', sets: 3, reps: '20 lanzamientos', weight: '150-180 pies', notes: 'Mantener trayectoria plana en el regreso.', completedSets: [false, false, false] }
-        ];
-
-        const savedData = localStorage.getItem('pitchnotes_exercises');
-        let exercises = savedData ? JSON.parse(savedData) : defaultBaseballData;
-        let timerInterval = null, timerTimeLeft = 60, isTimerRunning = false;
-        let stopwatchInterval = null, stopwatchTime = 0, isStopwatchRunning = false;
-        let deferredPrompt = null;
-
-        document.addEventListener('DOMContentLoaded', () => {
-            const randomQuote = quotes[Math.floor(Math.random() * quotes.length)];
-            document.getElementById('motivationalQuote').innerText = randomQuote;
-
-            renderExercises();
-            updateTimerDisplay();
-            checkPwaInstallation();
-        });
-
-        function enterApp() {
-            const intro = document.getElementById('introScreen');
-            const main = document.getElementById('mainApp');
-            intro.classList.add('opacity-0', 'pointer-events-none');
-            setTimeout(() => {
-                intro.classList.add('hidden');
-                main.classList.remove('hidden');
-                main.classList.add('flex');
-            }, 500);
-        }
-
-        window.addEventListener('beforeinstallprompt', (e) => {
-            e.preventDefault();
-            deferredPrompt = e;
-            const banner = document.getElementById('pwaInstallBanner');
-            if (banner) banner.classList.remove('hidden');
-        });
-
-        function checkPwaInstallation() {
-            const isStandalone = window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone;
-            const isIos = /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
-
-            if (isStandalone) return;
-
-            if (isIos) {
-                const banner = document.getElementById('pwaInstallBanner');
-                const desc = document.getElementById('pwaInstallDesc');
-                const btn = document.getElementById('pwaInstallBtn');
-                if (banner && desc && btn) {
-                    desc.innerText = 'Toca Compartir ⎋ y "Agregar al inicio"';
-                    btn.innerText = '¿Cómo instalar?';
-                    btn.onclick = () => alert('Para instalar en iPhone:\n1. Toca el botón de Compartir en Safari.\n2. Selecciona "Agregar a la pantalla de inicio".');
-                    banner.classList.remove('hidden');
-                }
-            }
-        }
-
-        function triggerPwaInstall() {
-            if (deferredPrompt) {
-                deferredPrompt.prompt();
-                deferredPrompt.userChoice.then((choiceResult) => {
-                    if (choiceResult.outcome === 'accepted') {
-                        closeInstallBanner();
-                    }
-                    deferredPrompt = null;
-                });
-            }
-        }
-
-        function closeInstallBanner() {
-            document.getElementById('pwaInstallBanner').classList.add('hidden');
-        }
-
-        function saveToStorage() { localStorage.setItem('pitchnotes_exercises', JSON.stringify(exercises)); }
-
-        function renderExercises() {
-            const container = document.getElementById('exerciseList');
-            const search = document.getElementById('searchInput').value.toLowerCase();
-            const category = document.getElementById('categoryFilter').value;
-
-            const filtered = exercises.filter(ex => {
-                const matchesSearch = ex.title.toLowerCase().includes(search) || (ex.notes && ex.notes.toLowerCase().includes(search));
-                const matchesCategory = category === 'all' || ex.category === category;
-                return matchesSearch && matchesCategory;
-            });
-
-            document.getElementById('exerciseCounter').innerText = `${filtered.length} registro${filtered.length !== 1 ? 's' : ''}`;
-
-            if (filtered.length === 0) {
-                container.innerHTML = `<div class="col-span-full text-center py-12 glass-panel rounded-2xl"><i class="fa-solid fa-baseball text-3xl text-slate-600 mb-2"></i><p class="text-slate-400 text-sm">No se encontraron registros de pitcheo</p></div>`;
-                return;
-            }
-
-            container.innerHTML = filtered.map(ex => `
-                <div class="glass-panel rounded-2xl overflow-hidden flex flex-col justify-between border border-slate-800 hover:border-slate-700 transition-all group">
-                    <div>
-                        ${ex.imageData ? `<div class="relative h-44 w-full overflow-hidden bg-slate-900"><img src="${ex.imageData}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"><div class="absolute inset-0 bg-gradient-to-t from-slate-950/90 via-slate-950/20 to-transparent"></div></div>` : ''}
-                        <div class="p-4 ${ex.imageData ? '-mt-10 relative z-10' : ''}">
-                            <div class="flex justify-between items-center gap-2 mb-3">
-                                <div class="flex items-center gap-2">
-                                    <span class="text-[10px] font-bold px-2 py-0.5 rounded-md bg-slate-800/90 text-slate-300 border border-slate-700/80 uppercase">${ex.category}</span>
-                                    <!-- Botón de Reloj COMPLETAMENTE INDEPENDIENTE en la izquierda -->
-                                    <button onclick="toggleTimerModal()" title="Abrir Reloj de Pitcheo" class="bg-slate-900/90 hover:bg-emerald-500/20 text-slate-400 hover:text-emerald-400 border border-slate-800 hover:border-emerald-500/40 p-1.5 rounded-lg text-xs transition-colors">
-                                        <i class="fa-solid fa-stopwatch"></i>
-                                    </button>
-                                </div>
-                                <!-- Botones de Editar y Eliminar JUNTOS a la derecha -->
-                                <div class="flex gap-1 bg-slate-900/80 p-1 rounded-lg border border-slate-800">
-                                    <button onclick="editExercise('${ex.id}')" title="Editar" class="text-slate-400 hover:text-emerald-400 p-1 text-xs"><i class="fa-solid fa-pen"></i></button>
-                                    <button onclick="deleteExercise('${ex.id}')" title="Eliminar" class="text-slate-400 hover:text-rose-400 p-1 text-xs"><i class="fa-solid fa-trash"></i></button>
-                                </div>
-                            </div>
-                            <h3 class="font-bold text-slate-100 text-base mb-2">${ex.title}</h3>
-                            <div class="grid grid-cols-2 gap-2 text-xs mb-3">
-                                <div class="bg-slate-900/80 p-2 rounded-xl border border-slate-800"><span class="text-[10px] text-slate-400 block font-semibold">Rondas x Reps</span><span class="font-bold text-slate-200">${ex.sets} × ${ex.reps || '-'}</span></div>
-                                <div class="bg-slate-900/80 p-2 rounded-xl border border-slate-800"><span class="text-[10px] text-slate-400 block font-semibold">Vel / Carga / Dist.</span><span class="font-bold text-slate-200">${ex.weight || 'N/A'}</span></div>
-                            </div>
-                            ${ex.notes ? `<p class="text-xs text-slate-400 line-clamp-2 bg-slate-900/40 p-2 rounded-lg border border-slate-800/50 mb-3"><i class="fa-solid fa-quote-left text-[10px] text-emerald-500/50 mr-1"></i>${ex.notes}</p>` : ''}
-                        </div>
-                    </div>
-                    <div class="p-4 pt-0">
-                        <div class="flex items-center justify-between text-[11px] font-semibold text-slate-400 mb-1.5">
-                            <span>RONDAS REALIZADAS</span>
-                            <button onclick="resetSingleExerciseCheckboxes('${ex.id}')" class="text-slate-400 hover:text-emerald-400 text-[10px] flex items-center gap-1 transition-colors">
-                                <i class="fa-solid fa-rotate-left"></i> Reiniciar
-                            </button>
-                        </div>
-                        <div class="grid grid-cols-${Math.min(ex.sets, 5)} gap-1.5">
-                            ${Array.from({length: ex.sets}).map((_, i) => `
-                                <button onclick="toggleSet('${ex.id}',${i})" class="py-1.5 rounded-lg text-xs font-mono font-bold transition-all flex items-center justify-center gap-1 ${ex.completedSets && ex.completedSets[i] ? 'bg-emerald-500/20 text-emerald-400 border border-emerald-500/40' : 'bg-slate-900 text-slate-500 border border-slate-800 hover:border-slate-700'}">
-                                    <i class="fa-solid ${ex.completedSets && ex.completedSets[i] ? 'fa-circle-check' : 'fa-circle'} text-[10px]"></i> R${i+1}
-                                </button>
-                            `).join('')}
-                        </div>
-                    </div>
-                </div>
-            `).join('');
-        }
-
-        function toggleSet(exerciseId, setIndex) {
-            const ex = exercises.find(e => e.id === exerciseId);
-            if (!ex) return;
-            if (!ex.completedSets) ex.completedSets = new Array(ex.sets).fill(false);
-            ex.completedSets[setIndex] = !ex.completedSets[setIndex];
-            saveToStorage();
-            renderExercises();
-        }
-
-        function resetSingleExerciseCheckboxes(exerciseId) {
-            const ex = exercises.find(e => e.id === exerciseId);
-            if (ex) {
-                ex.completedSets = new Array(ex.sets).fill(false);
-                saveToStorage();
-                renderExercises();
-            }
-        }
-
-        function openModal(editId = null) {
-            document.getElementById('exerciseForm').reset();
-            document.getElementById('exerciseId').value = '';
-            document.getElementById('imageData').value = '';
-            document.getElementById('imagePreviewContainer').classList.add('hidden');
-            document.getElementById('modalTitle').innerText = 'Registrar Trabajo de Pitcheo';
-
-            if (editId) {
-                const ex = exercises.find(e => e.id === editId);
-                if (ex) {
-                    document.getElementById('exerciseId').value = ex.id;
-                    document.getElementById('title').value = ex.title;
-                    document.getElementById('category').value = ex.category;
-                    document.getElementById('sets').value = ex.sets;
-                    document.getElementById('reps').value = ex.reps || '';
-                    document.getElementById('weight').value = ex.weight || '';
-                    document.getElementById('notes').value = ex.notes || '';
-                    if (ex.imageData) {
-                        document.getElementById('imageData').value = ex.imageData;
-                        document.getElementById('imagePreview').src = ex.imageData;
-                        document.getElementById('imagePreviewContainer').classList.remove('hidden');
-                    }
-                    document.getElementById('modalTitle').innerText = 'Editar Registro';
-                }
-            }
-            document.getElementById('exerciseModal').classList.remove('hidden');
-        }
-
-        function closeModal() { document.getElementById('exerciseModal').classList.add('hidden'); }
-
-        function saveExercise(e) {
-            e.preventDefault();
-            const id = document.getElementById('exerciseId').value || Date.now().toString();
-            const setsCount = parseInt(document.getElementById('sets').value) || 1;
-            const existingEx = exercises.find(ex => ex.id === id);
-
-            const exerciseData = {
-                id: id,
-                title: document.getElementById('title').value,
-                category: document.getElementById('category').value,
-                sets: setsCount,
-                reps: document.getElementById('reps').value,
-                weight: document.getElementById('weight').value,
-                notes: document.getElementById('notes').value,
-                imageData: document.getElementById('imageData').value,
-                completedSets: existingEx && existingEx.completedSets ? existingEx.completedSets.slice(0, setsCount) : new Array(setsCount).fill(false)
-            };
-
-            if (existingEx) {
-                const index = exercises.findIndex(ex => ex.id === id);
-                exercises[index] = exerciseData;
-            } else {
-                exercises.unshift(exerciseData);
-            }
-
-            saveToStorage();
-            renderExercises();
-            closeModal();
-        }
-
-        function editExercise(id) { openModal(id); }
-
-        function deleteExercise(id) {
-            if (confirm('¿Seguro que deseas eliminar este registro?')) {
-                exercises = exercises.filter(ex => ex.id !== id);
-                saveToStorage();
-                renderExercises();
-            }
-        }
-
-        function handleImageUpload(e) {
-            const file = e.target.files[0];
-            if (file) {
-                const reader = new FileReader();
-                reader.onload = function(evt) {
-                    document.getElementById('imageData').value = evt.target.result;
-                    document.getElementById('imagePreview').src = evt.target.result;
-                    document.getElementById('imagePreviewContainer').classList.remove('hidden');
-                    document.getElementById('imageUrlInput').value = '';
-                };
-                reader.readAsDataURL(file);
-            }
-        }
-
-        function handleUrlInput() {
-            const url = document.getElementById('imageUrlInput').value;
-            if (url) {
-                document.getElementById('imageData').value = url;
-                document.getElementById('imagePreview').src = url;
-                document.getElementById('imagePreviewContainer').classList.remove('hidden');
-            }
-        }
-
-        function toggleTimerModal() { document.getElementById('timerModal').classList.toggle('hidden'); }
-        function switchTimerTab(tab) {
-            if (tab === 'timer') {
-                document.getElementById('timerSection').classList.remove('hidden');
-                document.getElementById('stopwatchSection').classList.add('hidden');
-                document.getElementById('tabTimerBtn').className = 'flex-1 py-1.5 text-xs font-semibold rounded-lg bg-emerald-500 text-slate-950';
-                document.getElementById('tabStopwatchBtn').className = 'flex-1 py-1.5 text-xs font-semibold rounded-lg text-slate-400';
-            } else {
-                document.getElementById('timerSection').classList.add('hidden');
-                document.getElementById('stopwatchSection').classList.remove('hidden');
-                document.getElementById('tabStopwatchBtn').className = 'flex-1 py-1.5 text-xs font-semibold rounded-lg bg-emerald-500 text-slate-950';
-                document.getElementById('tabTimerBtn').className = 'flex-1 py-1.5 text-xs font-semibold rounded-lg text-slate-400';
-            }
-        }
-
-        function updateTimerDisplay() {
-            const m = String(Math.floor(timerTimeLeft / 60)).padStart(2, '0');
-            const s = String(timerTimeLeft % 60).padStart(2, '0');
-            document.getElementById('timerDisplay').innerText = `${m}:${s}`;
-        }
-
-        function setTimerSeconds(sec) {
-            if (isTimerRunning) toggleTimer();
-            timerTimeLeft = sec;
-            updateTimerDisplay();
-        }
-
-        function toggleTimer() {
-            const btn = document.getElementById('startTimerBtn');
-            if (isTimerRunning) {
-                clearInterval(timerInterval);
-                isTimerRunning = false;
-                btn.innerText = 'Iniciar';
-            } else {
-                isTimerRunning = true;
-                btn.innerText = 'Pausar';
-                timerInterval = setInterval(() => {
-                    if (timerTimeLeft > 0) {
-                        timerTimeLeft--;
-                        updateTimerDisplay();
-                    } else {
-                        clearInterval(timerInterval);
-                        isTimerRunning = false;
-                        btn.innerText = 'Iniciar';
-                        playAlarmSound();
-                        alert('¡Tiempo de descanso / preparación completado!');
-                    }
-                }, 1000);
-            }
-        }
-
-        function resetTimer() {
-            if (isTimerRunning) toggleTimer();
-            timerTimeLeft = 60;
-            updateTimerDisplay();
-        }
-
-        function startQuickTimer(sec) {
-            setTimerSeconds(sec);
-            if (!isTimerRunning) toggleTimer();
-            document.getElementById('timerModal').classList.remove('hidden');
-            switchTimerTab('timer');
-        }
-
-        function updateStopwatchDisplay() {
-            const h = String(Math.floor(stopwatchTime / 3600)).padStart(2, '0');
-            const m = String(Math.floor((stopwatchTime % 3600) / 60)).padStart(2, '0');
-            const s = String(stopwatchTime % 60).padStart(2, '0');
-            document.getElementById('stopwatchDisplay').innerText = `${h}:${m}:${s}`;
-        }
-
-        function toggleStopwatch() {
-            const btn = document.getElementById('startStopwatchBtn');
-            if (isStopwatchRunning) {
-                clearInterval(stopwatchInterval);
-                isStopwatchRunning = false;
-                btn.innerText = 'Iniciar';
-            } else {
-                isStopwatchRunning = true;
-                btn.innerText = 'Pausar';
-                stopwatchInterval = setInterval(() => {
-                    stopwatchTime++;
-                    updateStopwatchDisplay();
-                }, 1000);
-            }
-        }
-
-        function resetStopwatch() {
-            if (isStopwatchRunning) toggleStopwatch();
-            stopwatchTime = 0;
-            updateStopwatchDisplay();
-        }
-
-        function playAlarmSound() {
-            try {
-                const ctx = new (window.AudioContext || window.webkitAudioContext)();
-                const osc = ctx.createOscillator();
-                osc.type = 'sine';
-                osc.frequency.setValueAtTime(880, ctx.currentTime);
-                osc.connect(ctx.destination);
-                osc.start();
-                osc.stop(ctx.currentTime + 0.8);
-            } catch(e){}
-        }
-    </script>
+    renderHistorial();
+  </script>
 </body>
 </html>
