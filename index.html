@@ -338,10 +338,14 @@
                     <div>
                         ${ex.imageData ? `<div class="relative h-44 w-full overflow-hidden bg-slate-900"><img src="${ex.imageData}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"><div class="absolute inset-0 bg-gradient-to-t from-slate-950/90 via-slate-950/20 to-transparent"></div></div>` : ''}
                         <div class="p-4 ${ex.imageData ? '-mt-10 relative z-10' : ''}">
-                            <div class="flex justify-between items-start gap-2 mb-2">
-                                <span class="text-[10px] font-bold px-2 py-0.5 rounded-md bg-slate-800/90 text-slate-300 border border-slate-700/80 uppercase">${ex.category}</span>
+                            <div class="flex justify-between items-center gap-2 mb-3">
+                                <div class="flex items-center gap-2">
+                                    <span class="text-[10px] font-bold px-2 py-0.5 rounded-md bg-slate-800/90 text-slate-300 border border-slate-700/80 uppercase">${ex.category}</span>
+                                    <button onclick="toggleTimerModal()" title="Abrir Reloj / Cronómetro" class="bg-slate-900/90 hover:bg-emerald-500/20 text-slate-400 hover:text-emerald-400 border border-slate-800 hover:border-emerald-500/40 p-1.5 rounded-lg text-xs transition-colors">
+                                        <i class="fa-solid fa-stopwatch"></i>
+                                    </button>
+                                </div>
                                 <div class="flex gap-1 bg-slate-900/80 p-1 rounded-lg border border-slate-800">
-                                    <button onclick="toggleTimerModal()" title="Abrir Reloj / Cronómetro" class="text-slate-400 hover:text-emerald-400 p-1 text-xs"><i class="fa-solid fa-stopwatch"></i></button>
                                     <button onclick="editExercise('${ex.id}')" title="Editar" class="text-slate-400 hover:text-emerald-400 p-1 text-xs"><i class="fa-solid fa-pen"></i></button>
                                     <button onclick="deleteExercise('${ex.id}')" title="Eliminar" class="text-slate-400 hover:text-rose-400 p-1 text-xs"><i class="fa-solid fa-trash"></i></button>
                                 </div>
